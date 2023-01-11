@@ -4,7 +4,7 @@ const session = require('express-session');
 const passport = require('passport');
 const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 const routes = require('./routes.js');
-const config = require('./config')
+require("dotenv").config();
  
 app.set('view engine', 'ejs');
  
@@ -26,9 +26,9 @@ passport.deserializeUser(function (obj, cb) {
 });
  
 passport.use(new LinkedInStrategy({
-  clientID: config.linkedinAuth.clientID,
-  clientSecret: config.linkedinAuth.clientSecret,
-  callbackURL: config.linkedinAuth.callbackURL,
+  clientID: process.env.CLIENTID,
+  clientSecret: process.env.CLIENTSECRET,
+  callbackURL: process.env.CALLBACKURL,
   scope: ['r_emailaddress', 'r_liteprofile'],
 }, function (token, tokenSecret, profile, done) {
   return done(null, profile);
